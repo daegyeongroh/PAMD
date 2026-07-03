@@ -95,7 +95,7 @@ The final paper is available here:
 If you find this work useful, please cite:
 
 ```bibtex
-@inproceedings{roh2026pamd,
+@inproceedings{rohbae2026pamd,
   title={PAMD: Structured Adaptive Distances for Bisimulation Representations in Visual Reinforcement Learning},
   author={Roh, Daegyeong and Bae, Juho and Choi, Han-Lim},
   booktitle={Proceedings of the 43rd International Conference on Machine Learning},
