@@ -1,0 +1,19 @@
+name: micosimsr
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - pytorch=2.7.0
+  - torchvision=0.22.0
+  - cudatoolkit=12.6
+  - absl-py
+  - pyparsing
+  - pip:
+    - termcolor
+    - tb-nightly
+    - git+git://github.com/deepmind/dm_control.git
+    - imageio
+    - imageio-ffmpeg
+    - pillow
+    - torchvision
+    - scikit-image

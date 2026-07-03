@@ -1,0 +1,23 @@
+name: dbc
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - pytorch=2.7.0
+  - torchvision=0.22.0
+  - cudatoolkit=12.6
+  - absl-py
+  - pyparsing
+  - pip:
+    - termcolor
+    - git+git://github.com/deepmind/dm_control.git
+    - opencv-python
+    - pillow
+    - scikit-image
+    - scikit-video
+    - tb-nightly
+    - tqdm
+    - imageio
+    - imageio-ffmpeg
+    - networkx
+    - dotmap
