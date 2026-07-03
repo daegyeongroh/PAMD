@@ -1,2 +1,98 @@
-# PAMD
-Official repository of ICML 2026 paper "Structured Adaptive Distances for Bisimulation Representations in Visual Reinforcement Learning"
+# PAMD: Structured Adaptive Distances for Bisimulation Representations in Visual Reinforcement Learning
+
+<p align="center">
+  <b>Official repository for the ICML 2026 paper</b><br>
+  <b>"PAMD: Structured Adaptive Distances for Bisimulation Representations in Visual Reinforcement Learning"</b>
+</p>
+
+<p align="center">
+  <b>Daegyeong Roh*</b> · <b>Juho Bae*</b> · <b>Han-Lim Choi</b><br>
+  KAIST<br>
+  <sup>*</sup>Equal contribution
+</p>
+
+<p align="center">
+  <a href="PAMD_paper.pdf"><b>Paper</b></a> |
+  <a href="#overview"><b>Overview</b></a> |
+  <a href="#method"><b>Method</b></a> |
+  <a href="#results"><b>Results</b></a> |
+  <a href="#citation"><b>Citation</b></a>
+</p>
+
+> **Note:** The final paper PDF is available in this repository as [`PAMD_paper.pdf`](PAMD_paper.pdf).  
+> Code, training scripts, and reproduction instructions will be released soon.
+
+## Overview
+
+Many visual reinforcement learning algorithms learn representations by matching latent distances to behavioral distances induced by reward and transition similarity. However, the choice of latent distance can significantly affect downstream control performance.
+
+Fixed, hand-designed distances such as ℓp norms can be too restrictive, while fully unconstrained pairwise distance heads may fit the metric objective without meaningfully improving the representation.
+
+We introduce **PAMD**: **Pairwise Adaptive Mahalanobis Distance**, a structured yet adaptive latent distance for bisimulation-based representation learning. PAMD parameterizes a pair-conditioned positive-definite quadratic form, providing a more expressive alternative to fixed latent norms while avoiding the degeneracy of unconstrained distance heads.
+
+## Method
+
+Given two latent representations \(z\) and \(z'\), PAMD computes a pairwise adaptive distance
+
+\[
+d_\theta(z, z') =
+\sqrt{
+(z - z')^\top \widetilde{G}_\theta(z, z') (z - z') + \epsilon
+},
+\]
+
+where \(\widetilde{G}_\theta(z, z')\) is a trace-normalized positive-definite matrix predicted from the latent pair.
+
+The metric matrix is constructed through a Cholesky-style parameterization:
+
+\[
+G_0(z, z') = L_\theta(z, z') L_\theta(z, z')^\top,
+\]
+
+followed by pairwise symmetrization, ridge stabilization, and trace normalization. This gives PAMD a structured local Mahalanobis geometry that remains tied to the latent displacement \(z - z'\).
+
+## Results
+
+PAMD is evaluated as a plug-in replacement for latent comparators in bisimulation-based visual reinforcement learning pipelines.
+
+Across pixel-based DeepMind Control Suite tasks, PAMD improves downstream control performance when applied to representative operator families, including:
+
+- DBC-style bisimulation objectives;
+- independently-coupled MICo/SimSR-style objectives.
+
+The paper also includes ablations showing that:
+
+- full pair-conditioned quadratic forms outperform diagonal Mahalanobis variants;
+- trace normalization stabilizes learning;
+- PAMD is more robust under natural-video visual disturbances;
+- unlike unconstrained pairwise MLP distances, PAMD preserves learning pressure on the encoder instead of fitting the fixed-point target through the distance head alone.
+
+## Repository Status
+
+This repository currently contains the final paper PDF.
+
+The following components will be released soon:
+
+- PAMD distance module;
+- training and evaluation code;
+- configuration files for visual RL experiments;
+- scripts for reproducing main results and ablation studies;
+- plotting utilities for paper figures.
+
+## Paper
+
+The final paper is available here:
+
+[PAMD_paper.pdf](PAMD_paper.pdf)
+
+## Citation
+
+If you find this work useful, please cite:
+
+```bibtex
+@inproceedings{roh2026pamd,
+  title={PAMD: Structured Adaptive Distances for Bisimulation Representations in Visual Reinforcement Learning},
+  author={Roh, Daegyeong and Bae, Juho and Choi, Han-Lim},
+  booktitle={Proceedings of the 43rd International Conference on Machine Learning},
+  year={2026}
+}
