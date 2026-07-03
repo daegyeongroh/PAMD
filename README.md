@@ -32,24 +32,26 @@ We introduce **PAMD**: **Pairwise Adaptive Mahalanobis Distance**, a structured 
 
 ## Method
 
-Given two latent representations \(z\) and \(z'\), PAMD computes a pairwise adaptive distance
+Given two latent representations $z$ and $z'$, PAMD computes a pairwise adaptive distance
 
-\[
+$$
 d_\theta(z, z') =
 \sqrt{
 (z - z')^\top \widetilde{G}_\theta(z, z') (z - z') + \epsilon
-},
-\]
+}.
+$$
 
-where \(\widetilde{G}_\theta(z, z')\) is a trace-normalized positive-definite matrix predicted from the latent pair.
+Here, $\widetilde{G}_\theta(z, z')$ is a trace-normalized positive-definite weight matrix predicted from the latent pair.
 
-The metric matrix is constructed through a Cholesky-style parameterization:
+### Positive-definite weight matrix construction via Cholesky decomposition
 
-\[
-G_0(z, z') = L_\theta(z, z') L_\theta(z, z')^\top,
-\]
+PAMD constructs the pair-conditioned weight matrix using a Cholesky-style decomposition. A lightweight metric network predicts the lower-triangular entries of $L_\theta(z, z')$, and the initial positive-definite matrix is formed as
 
-followed by pairwise symmetrization, ridge stabilization, and trace normalization. This gives PAMD a structured local Mahalanobis geometry that remains tied to the latent displacement \(z - z'\).
+$$
+G_0(z, z') = L_\theta(z, z') L_\theta(z, z')^\top.
+$$
+
+This matrix is then symmetrized over the input pair, stabilized with a small ridge term, and trace-normalized. As a result, PAMD provides a structured local Mahalanobis geometry while keeping the distance tied to the latent displacement $z - z'$.
 
 ## Results
 
