@@ -290,7 +290,7 @@ class BisimOursAgent(object):
             
             G_next = self.metric_net(mu1,mu2)              
             tr_next=torch.diagonal(G_next,dim1=1,dim2=2).sum(dim=1)
-            G_next=G_next/(tr_next.detach().view(B,1,1)+eps)
+            G_next=G_next/(tr_next.view(B,1,1)+eps)
             dmu = (mu1 - mu2).unsqueeze(-1)               
             mean_term_sq = torch.bmm(torch.bmm(dmu.transpose(1, 2), G_next), dmu).squeeze(-1)  
             transition_dist = torch.sqrt(torch.clamp(mean_term_sq, min=1e-8))
